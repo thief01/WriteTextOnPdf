@@ -61,7 +61,7 @@ namespace EasyAddTextToPdf
             
             var cb = pdfWriter.DirectContent;
 
-            BaseFont bf = BaseFont.CreateFont("ARIALUNI.TTF", BaseFont.IDENTITY_H, true);
+            BaseFont bf = BaseFont.CreateFont("FONT.TTF", BaseFont.IDENTITY_H, true);
 
 
             cb.SetColorFill(BaseColor.DARK_GRAY);
