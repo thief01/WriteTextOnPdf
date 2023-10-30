@@ -45,6 +45,10 @@
 # Resources files
 *.pdf
 
+# Compile paths
+*/obj
+*/bin
+
 # Kernel Module Compile Results
 *.mod*
 *.cmd
