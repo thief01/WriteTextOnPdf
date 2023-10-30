@@ -35,7 +35,6 @@ namespace EasyAddTextToPdf
             
             var pdfReader = new PdfReader(sr);
             var pdfStamper = new PdfStamper(pdfReader, fs);
-            var contentByte = pdfStamper.GetOverContent(1); 
 
             var cb = pdfStamper.GetOverContent(1);
 
@@ -48,8 +47,6 @@ namespace EasyAddTextToPdf
             cb.EndText();
 
             pdfStamper.Close();
-            
-            
         }
     }
 }
