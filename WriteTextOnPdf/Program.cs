@@ -14,6 +14,7 @@ namespace EasyAddTextToPdf
             public string OutputPath { get; }
             public string Text { get; }
             public int TextAlign { get; }
+            public int TextSize { get; }
 
             public Args(string[] args)
             {
@@ -21,6 +22,7 @@ namespace EasyAddTextToPdf
                 OutputPath = args[1];
                 Text = args[2];
                 TextAlign = Convert.ToInt32(args[3]);
+                TextSize = Convert.ToInt32(args[4]);
             }
         }
         static void Main(string[] args)
@@ -30,14 +32,13 @@ namespace EasyAddTextToPdf
 
             if (args.Length < 4)
             {
-                Console.WriteLine("InputPath, OutputPath, TextToWrite, TextAlign");
+                Console.WriteLine("InputPath, OutputPath, TextToWrite, TextAlign, TextSize");
                 Console.WriteLine("- Text align, 0 - left, 1 center, 2 - right");
                 return;
             }
 
             Args parsedArgs = new Args(args);
             
-
             if (!File.Exists(parsedArgs.InputPath))
             {
                 Console.WriteLine($"File \"{parsedArgs.InputPath}\" doesn't exist.");
@@ -49,13 +50,6 @@ namespace EasyAddTextToPdf
             
             var pdfReader = new PdfReader(sr);
             
-            // var fs2 = new FileStream("2_" + parsedArgs.OutputPath, FileMode.Create);
-            // var pdfStamper = new PdfStamper(pdfReader, fs2);
-            // var page2 = pdfStamper.GetImportedPage(pdfReader, 1);
-            // var content = pdfStamper.GetOverContent(1);
-            // content.AddTemplate(page2, 0.9f, 0, 0, 0.9f, 0, 0);
-            // pdfStamper.Close();
-
             var size = pdfReader.GetPageSizeWithRotation(1);
             var doc = new Document(size);
             var pdfWriter = PdfWriter.GetInstance(doc, fs);
@@ -71,9 +65,9 @@ namespace EasyAddTextToPdf
 
 
             cb.SetColorFill(BaseColor.DARK_GRAY);
-            cb.SetFontAndSize(bf, 12);
+            cb.SetFontAndSize(bf, parsedArgs.TextSize);
             cb.BeginText();
-            cb.ShowTextAligned(parsedArgs.TextAlign, parsedArgs.Text, size.Width/2, size.Height - 12, 0);
+            cb.ShowTextAligned(parsedArgs.TextAlign, parsedArgs.Text, size.Width/2, size.Height - parsedArgs.TextSize, 0);
             cb.EndText();
             
             doc.Close();
