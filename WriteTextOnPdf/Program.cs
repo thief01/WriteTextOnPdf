@@ -25,6 +25,8 @@ namespace EasyAddTextToPdf
         }
         static void Main(string[] args)
         {
+            // Test();
+            
             EncodingProvider ppp = CodePagesEncodingProvider.Instance;
             Encoding.RegisterProvider(ppp);
 
@@ -46,21 +48,37 @@ namespace EasyAddTextToPdf
             
             var sr = new FileStream(parsedArgs.InputPath, FileMode.Open);
             var fs = new FileStream(parsedArgs.OutputPath, FileMode.Create);
-            
+            var fs2 = new FileStream("2_" + parsedArgs.OutputPath, FileMode.Create);
             var pdfReader = new PdfReader(sr);
-            var pdfStamper = new PdfStamper(pdfReader, fs);
+            // var pdfStamper = new PdfStamper(pdfReader, fs2);
 
-            var cb = pdfStamper.GetOverContent(1);
+            // var page2 = pdfStamper.GetImportedPage(pdfReader, 1);
+            // var content = pdfStamper.GetOverContent(1);
+            // content.AddTemplate(page2, 0.9f, 0, 0, 0.9f, 0, 0);
+
+            var size = pdfReader.GetPageSizeWithRotation(1);
+            var doc = new Document(size);
+            var pdfWriter = PdfWriter.GetInstance(doc, fs);
+
+            doc.Open();
+            
+            PdfImportedPage page = pdfWriter.GetImportedPage(pdfReader, 1);
+            pdfWriter.DirectContent.AddTemplate(page, 0.9f,0, 0, 0.9f, size.Width*0.1f/2, 0);
+            
+            var cb = pdfWriter.DirectContent;
 
             BaseFont bf = BaseFont.CreateFont("ARIALUNI.TTF", BaseFont.IDENTITY_H, true);
+
 
             cb.SetColorFill(BaseColor.DARK_GRAY);
             cb.SetFontAndSize(bf, 12);
             cb.BeginText();
-            cb.ShowTextAligned(parsedArgs.TextAlign, parsedArgs.Text, 100, 700, 0);
+            cb.ShowTextAligned(parsedArgs.TextAlign, parsedArgs.Text, size.Width/2, size.Height - 12, 0);
             cb.EndText();
-
-            pdfStamper.Close();
+            
+            // pdfStamper.Close();
+            doc.Close();
+            pdfWriter.Close();
         }
     }
 }
