@@ -25,8 +25,6 @@ namespace EasyAddTextToPdf
         }
         static void Main(string[] args)
         {
-            // Test();
-            
             EncodingProvider ppp = CodePagesEncodingProvider.Instance;
             Encoding.RegisterProvider(ppp);
 
@@ -48,13 +46,15 @@ namespace EasyAddTextToPdf
             
             var sr = new FileStream(parsedArgs.InputPath, FileMode.Open);
             var fs = new FileStream(parsedArgs.OutputPath, FileMode.Create);
-            var fs2 = new FileStream("2_" + parsedArgs.OutputPath, FileMode.Create);
+            
             var pdfReader = new PdfReader(sr);
+            
+            // var fs2 = new FileStream("2_" + parsedArgs.OutputPath, FileMode.Create);
             // var pdfStamper = new PdfStamper(pdfReader, fs2);
-
             // var page2 = pdfStamper.GetImportedPage(pdfReader, 1);
             // var content = pdfStamper.GetOverContent(1);
             // content.AddTemplate(page2, 0.9f, 0, 0, 0.9f, 0, 0);
+            // pdfStamper.Close();
 
             var size = pdfReader.GetPageSizeWithRotation(1);
             var doc = new Document(size);
@@ -76,7 +76,6 @@ namespace EasyAddTextToPdf
             cb.ShowTextAligned(parsedArgs.TextAlign, parsedArgs.Text, size.Width/2, size.Height - 12, 0);
             cb.EndText();
             
-            // pdfStamper.Close();
             doc.Close();
             pdfWriter.Close();
         }
