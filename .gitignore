@@ -42,6 +42,9 @@
 *.idb
 *.pdb
 
+# Resources files
+*.pdf
+
 # Kernel Module Compile Results
 *.mod*
 *.cmd
