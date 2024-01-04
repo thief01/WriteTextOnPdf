@@ -21,13 +21,13 @@ namespace EasyAddTextToPdf
 
             var (pdfWriter, pdfReader, doc, settings) = CreateObjects(parsedArgs);
             
-
             doc.Open();
 
             PdfImportedPage page = pdfWriter.GetImportedPage(pdfReader, 1);
             pdfWriter.DirectContent.AddTemplate(page, settings.PdfScale.X, 0, 0, settings.PdfScale.Y,  settings.PdfOffset.X, settings.PdfOffset.Y);
 
-            AddSimpleText(parsedArgs.Text, pdfWriter, settings);
+            var splitedText = GetTextLines(parsedArgs.Text);
+            AddSimpleText(splitedText, pdfWriter, settings);
 
             doc.Close();
             pdfWriter.Close();
@@ -60,24 +60,31 @@ namespace EasyAddTextToPdf
 
             var pdfReader = new PdfReader(sr);
             var size = pdfReader.GetPageSizeWithRotation(1);
-            settings.CalculatePositions(size);
+            settings.CalculatePositions(size, GetTextLines(parsedArgs.Text).Length);
             var doc = new Document(size);
             var pdfWriter = PdfWriter.GetInstance(doc, fs);
 
             return (pdfWriter, pdfReader, doc, settings);
         }
         
-        private static void AddSimpleText(string text, PdfWriter pdfWriter, Settings settings)
+        private static void AddSimpleText(string[] text, PdfWriter pdfWriter, Settings settings)
         {
             var cb = pdfWriter.DirectContent;
 
             cb.SetColorFill(settings.TextColorScaled);
             cb.SetFontAndSize(settings.BaseFont, settings.TextSize);
             cb.BeginText();
-            cb.ShowTextAligned((int)settings.TextAlign, text, settings.TextPosition.X,
-                settings.TextPosition.Y /* size.Height - settings.TextSize */,
-                0);
+            for (int i = 0; i < text.Length; i++)
+            {
+                cb.ShowTextAligned((int)settings.TextAlign, text[i], settings.TextPosition.X, settings.TextPosition.Y + settings.LineOffset * i, 0);
+            }
+           
             cb.EndText();
+        }
+        
+        private static string[] GetTextLines(string text)
+        {
+            return text.Split("\\n");
         }
     }
 }

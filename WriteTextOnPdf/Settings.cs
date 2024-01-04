@@ -27,16 +27,9 @@ namespace EasyAddTextToPdf
         public Vector2 PdfOffset { get; private set; } = new Vector2(0, 0);
         public Vector2 TextPosition { get; private set; } = new Vector2(0, 0);
         public BaseFont BaseFont { get; private set; }
+        public float LineOffset { get; private set; }
 
-        public BaseColor TextColorScaled
-        {
-            get
-            {
-                return new BaseColor(TextColor.X / 255f, TextColor.Y / 255f, TextColor.Z / 255f);
-            }
-        }
-
-        
+        public BaseColor TextColorScaled => new(TextColor.X / 255f, TextColor.Y / 255f, TextColor.Z / 255f);
         private Vector3 TextColor { get; set; } = new Vector3(0, 0, 0);
         
         public Settings()
@@ -50,18 +43,17 @@ namespace EasyAddTextToPdf
             }
         }
 
-        public void CalculatePositions(Rectangle size)
+        public void CalculatePositions(Rectangle size, int textLines = 1)
         {
-            float neededSize = TextSize + TextMargin;
+            float neededSizeForLine = (TextSize + TextMargin);
+            float neededSize = neededSizeForLine * textLines;
             float calculatedScale = (size.Height - neededSize ) / size.Height;
             float invertedScale = 1 - calculatedScale;
-
-            PdfScale = new Vector2(calculatedScale, calculatedScale);
-
-            float textY = OnTop ? size.Height - TextSize - TextMargin / 2 : 0 + TextMargin / 2 + 3;
+            float textY = OnTop ? size.Height - TextSize - TextMargin / 2 : neededSize - TextMargin / 2 - 10;
             
+            PdfScale = new Vector2(calculatedScale, calculatedScale);
             PdfOffset = new Vector2(size.Width * invertedScale / 2, OnTop ? 0 : size.Height * invertedScale);
-
+            LineOffset = -neededSizeForLine;
             TextPosition = new Vector2(size.Width / 2, textY);
         }
 
