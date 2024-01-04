@@ -25,7 +25,7 @@ namespace EasyAddTextToPdf
             doc.Open();
 
             PdfImportedPage page = pdfWriter.GetImportedPage(pdfReader, 1);
-            pdfWriter.DirectContent.AddTemplate(page, settings.PdfScale.X, 0, 0, settings.PdfScale.Y,  settings.PdfOffset.X/* size.Width * 0.1f / 2*/, settings.PdfOffset.Y);
+            pdfWriter.DirectContent.AddTemplate(page, settings.PdfScale.X, 0, 0, settings.PdfScale.Y,  settings.PdfOffset.X, settings.PdfOffset.Y);
 
             AddSimpleText(parsedArgs.Text, pdfWriter, settings);
 
