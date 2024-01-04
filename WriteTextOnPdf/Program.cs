@@ -27,15 +27,7 @@ namespace EasyAddTextToPdf
             PdfImportedPage page = pdfWriter.GetImportedPage(pdfReader, 1);
             pdfWriter.DirectContent.AddTemplate(page, settings.PdfScale.X, 0, 0, settings.PdfScale.Y,  settings.PdfOffset.X/* size.Width * 0.1f / 2*/, settings.PdfOffset.Y);
 
-            var cb = pdfWriter.DirectContent;
-
-            cb.SetColorFill(settings.TextColorScaled);
-            cb.SetFontAndSize(settings.BaseFont, settings.TextSize);
-            cb.BeginText();
-            cb.ShowTextAligned((int)settings.TextAlign, parsedArgs.Text, settings.TextPosition.X,
-                settings.TextPosition.Y /* size.Height - settings.TextSize */,
-                0);
-            cb.EndText();
+            AddSimpleText(parsedArgs.Text, pdfWriter, settings);
 
             doc.Close();
             pdfWriter.Close();
@@ -45,13 +37,10 @@ namespace EasyAddTextToPdf
         {
             if (args.Length < 3)
             {
-                // Console.WriteLine("Args needed: InputPath, OutputPath, TextToWrite");
                 throw new Exception("\"Args needed: InputPath, OutputPath, TextToWrite\"");
-                // return (false, null);
             }
 
             Args parsedArgs = new Args(args);
-
             return (true, parsedArgs);
         }
         
@@ -60,8 +49,6 @@ namespace EasyAddTextToPdf
             if (!File.Exists(inputPath))
             {
                 throw new Exception($"File \"{inputPath}\" doesn't exist.");
-                Console.WriteLine($"File \"{inputPath}\" doesn't exist.");
-                return;
             }
         }
         
@@ -78,6 +65,19 @@ namespace EasyAddTextToPdf
             var pdfWriter = PdfWriter.GetInstance(doc, fs);
 
             return (pdfWriter, pdfReader, doc, settings);
+        }
+        
+        private static void AddSimpleText(string text, PdfWriter pdfWriter, Settings settings)
+        {
+            var cb = pdfWriter.DirectContent;
+
+            cb.SetColorFill(settings.TextColorScaled);
+            cb.SetFontAndSize(settings.BaseFont, settings.TextSize);
+            cb.BeginText();
+            cb.ShowTextAligned((int)settings.TextAlign, text, settings.TextPosition.X,
+                settings.TextPosition.Y /* size.Height - settings.TextSize */,
+                0);
+            cb.EndText();
         }
     }
 }
