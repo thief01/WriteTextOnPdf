@@ -27,6 +27,17 @@ namespace EasyAddTextToPdf
         public Vector2 PdfOffset { get; private set; } = new Vector2(0, 0);
         public Vector2 TextPosition { get; private set; } = new Vector2(0, 0);
         public BaseFont BaseFont { get; private set; }
+
+        public BaseColor TextColorScaled
+        {
+            get
+            {
+                return new BaseColor(TextColor.X / 255f, TextColor.Y / 255f, TextColor.Z / 255f);
+            }
+        }
+
+        
+        private Vector3 TextColor { get; set; } = new Vector3(0, 0, 0);
         
         public Settings()
         {
@@ -69,6 +80,9 @@ namespace EasyAddTextToPdf
             TextOffsetHorizontal = Convert.ToInt32(xmlNodeList[0].InnerText);
             xmlNodeList = xmlReader.SelectNodes("Config/OnTop");
             OnTop = Convert.ToBoolean(xmlNodeList[0].InnerText);
+            TextColor = new Vector3(Convert.ToInt32(xmlReader.SelectNodes("Config/TextColor/R")[0].InnerText),
+                Convert.ToInt32(xmlReader.SelectNodes("Config/TextColor/G")[0].InnerText),
+                Convert.ToInt32(xmlReader.SelectNodes("Config/TextColor/B")[0].InnerText));
 
             Console.WriteLine(
                 $"### Loaded config with following settings ###" + 
@@ -76,7 +90,8 @@ namespace EasyAddTextToPdf
                 $"\nText size: {TextSize}" +
                 $"\nText margin: {TextMargin}" + 
                 $"\nText offset from center(horizontal): {TextOffsetHorizontal}" + 
-                $" \nWrite text on top: {OnTop.ToString()}\n\n");
+                $" \nWrite text on top: {OnTop.ToString()}" +
+                $" \nText color: {TextColor.ToString()}\n\n");
         }
     }
 }
