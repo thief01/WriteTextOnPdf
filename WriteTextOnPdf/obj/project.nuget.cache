@@ -1,11 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "l8moeCuMY8cdeldaQ6/fG1NqtpLjtSZRz+ddOngbenRo8n4sVAnR7hp39kVGj57UPs0x+wbeg7C9kLGelEVu9g==",
+  "dgSpecHash": "x1fYzyyP3dGriIwEUHOgo73Hh/ZekouoJNnPzQiLmHTBFe8fiZp3tjQpg4XzRxRAQ2Yhg1bU27QwJOApR0jwLw==",
   "success": true,
   "projectFilePath": "F:\\_P\\thief01\\RiderProjects\\WriteTextOnPdf\\WriteTextOnPdf\\WriteTextOnPdf.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\thief01\\.nuget\\packages\\bouncycastle\\1.8.9\\bouncycastle.1.8.9.nupkg.sha512",
     "C:\\Users\\thief01\\.nuget\\packages\\itextsharp\\5.5.13.3\\itextsharp.5.5.13.3.nupkg.sha512",
+    "C:\\Users\\thief01\\.nuget\\packages\\microsoft.net.illink.analyzers\\7.0.100-1.23211.1\\microsoft.net.illink.analyzers.7.0.100-1.23211.1.nupkg.sha512",
+    "C:\\Users\\thief01\\.nuget\\packages\\microsoft.net.illink.tasks\\7.0.100-1.23211.1\\microsoft.net.illink.tasks.7.0.100-1.23211.1.nupkg.sha512",
     "C:\\Users\\thief01\\.nuget\\packages\\microsoft.netcore.app.ref\\7.0.14\\microsoft.netcore.app.ref.7.0.14.nupkg.sha512",
     "C:\\Users\\thief01\\.nuget\\packages\\microsoft.netcore.app.runtime.win-x86\\7.0.14\\microsoft.netcore.app.runtime.win-x86.7.0.14.nupkg.sha512",
     "C:\\Users\\thief01\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\7.0.14\\microsoft.windowsdesktop.app.ref.7.0.14.nupkg.sha512",

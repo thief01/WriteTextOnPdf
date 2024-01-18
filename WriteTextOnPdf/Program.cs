@@ -76,7 +76,14 @@ namespace EasyAddTextToPdf
             cb.BeginText();
             for (int i = 0; i < text.Length; i++)
             {
-                cb.ShowTextAligned((int)settings.TextAlign, text[i], settings.TextPosition.X, settings.TextPosition.Y + settings.LineOffset * i, 0);
+                Chunk chunk = new Chunk("test bold inject", new Font(Font.FontFamily.HELVETICA, settings.TextSize*2, Font.BOLD, new BaseColor(255,0,0, 255)));
+                Chunk chunk2 = new Chunk("another one", new Font(Font.FontFamily.HELVETICA, settings.TextSize, Font.NORMAL, settings.TextColorScaled));
+                Phrase phrase = new Phrase(text[i],
+                    new Font(Font.FontFamily.HELVETICA, settings.TextSize, Font.NORMAL, settings.TextColorScaled));
+                phrase.Add(chunk);
+                phrase.Add(chunk2);
+                // cb.ShowTextAligned((int)settings.TextAlign, text[i], settings.TextPosition.X, settings.TextPosition.Y + settings.LineOffset * i, 0);
+                ColumnText.ShowTextAligned(cb, (int)settings.TextAlign, phrase, settings.TextPosition.X, settings.TextPosition.Y + settings.LineOffset * i, 0);
             }
            
             cb.EndText();
