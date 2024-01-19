@@ -7,9 +7,9 @@ using Rectangle = iTextSharp.text.Rectangle;
 
 namespace EasyAddTextToPdf
 {
-    public class Settings
+    public class ConfigLoader
     {
-        private const string SETTINGS_FILE_NAME = "config.xml";
+        public const string SETTINGS_FILE_NAME = "config.xml";
 
         public enum TextAlignEnum
         {
@@ -32,7 +32,9 @@ namespace EasyAddTextToPdf
         public BaseColor TextColorScaled => new(TextColor.X / 255f, TextColor.Y / 255f, TextColor.Z / 255f);
         private Vector3 TextColor { get; set; } = new Vector3(0, 0, 0);
         
-        public Settings()
+        private XmlDocument xmlReader = new XmlDocument();
+        
+        public ConfigLoader()
         {
             BaseFont = BaseFont.CreateFont("FONT.TTF", BaseFont.IDENTITY_H, true);
             if (File.Exists(SETTINGS_FILE_NAME))
@@ -59,10 +61,11 @@ namespace EasyAddTextToPdf
 
         private void LoadSettings()
         {
-            XmlDocument xmlReader = new XmlDocument();
+            xmlReader = new XmlDocument();
             xmlReader.Load(SETTINGS_FILE_NAME);
 
             XmlNodeList xmlNodeList = xmlReader.SelectNodes("Config/TextAlign");
+            xmlNodeList = xmlReader.SelectNodes("Config/TextAlign");
             TextAlign = (TextAlignEnum)Convert.ToInt32(xmlNodeList[0].InnerText);
             xmlNodeList = xmlReader.SelectNodes("Config/TextSize");
             TextSize = Convert.ToInt32(xmlNodeList[0].InnerText);
