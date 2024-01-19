@@ -1,17 +1,24 @@
-﻿using System.Text;
+﻿using System.Numerics;
+using System.Text;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
+using WriteTextOnPdf.Data;
 using WriteTextOnPdf.UnitTests;
 
 namespace WriteTextOnPdf
 {
     class Program
     {
+        private const bool USE_TEST = false;
+        private static Vector2 pageSize;
         static void Main(string[] args)
         {
+            if (USE_TEST)
+            {
+                UnitTestManager unitTestManager = new UnitTestManager();
+            }
+            
             ConfigLoader configLoader = new ConfigLoader();
-            UnitTestManager unitTestManager = new UnitTestManager();
-            return;
             EncodingProvider ppp = CodePagesEncodingProvider.Instance;
             Encoding.RegisterProvider(ppp);
 
@@ -25,11 +32,18 @@ namespace WriteTextOnPdf
             
             doc.Open();
 
-            PdfImportedPage page = pdfWriter.GetImportedPage(pdfReader, 1);
-            pdfWriter.DirectContent.AddTemplate(page, settings.PdfScale.X, 0, 0, settings.PdfScale.Y,  settings.PdfOffset.X, settings.PdfOffset.Y);
+            var pdfSettings = PdfSettings.Instance;
+            pageSize = new Vector2(pdfReader.GetPageSizeWithRotation(1).Width, pdfReader.GetPageSizeWithRotation(1).Height);
+            var pageOffset = pdfSettings.GetOffsetFromPageSize(pageSize);
 
-            var splitedText = GetTextLines(parsedArgs.Text);
-            AddSimpleText(splitedText, pdfWriter, settings);
+            PdfImportedPage page = pdfWriter.GetImportedPage(pdfReader, 1);
+            pdfWriter.DirectContent.AddTemplate(page, pdfSettings.PdfScale.X, 0, 0, pdfSettings.PdfScale.Y,
+                pageOffset.X, pageOffset.Y);
+
+            AddTexts(pdfWriter, parsedArgs);
+
+            // var splitedText = GetTextLines(parsedArgs.Text);
+            // AddSimpleText(splitedText, pdfWriter, settings);
 
             doc.Close();
             pdfWriter.Close();
@@ -62,11 +76,31 @@ namespace WriteTextOnPdf
 
             var pdfReader = new PdfReader(sr);
             var size = pdfReader.GetPageSizeWithRotation(1);
-            configLoader.CalculatePositions(size, GetTextLines(parsedArgs.Text).Length);
+            // configLoader.CalculatePositions(size, GetTextLines(parsedArgs.Text).Length);
             var doc = new Document(size);
             var pdfWriter = PdfWriter.GetInstance(doc, fs);
 
             return (pdfWriter, pdfReader, doc, configLoader);
+        }
+
+        private static void AddTexts(PdfWriter pdfWriter, Args parsedArgs)
+        {
+            Console.WriteLine("Adding texts.");
+            Console.WriteLine(pdfWriter == null);
+            var cb = pdfWriter.DirectContent;
+            cb.BeginText();
+            
+            for (int i = 0; i < parsedArgs.Texts.Count; i++)
+            {
+                var phraseDatas = TextFactory.GetPhasesFromText(parsedArgs.Texts[i]);
+                for (int j = 0; j < phraseDatas.Count; j++)
+                {
+                    ColumnText.ShowTextAligned(cb, phraseDatas[j].TextAlign, phraseDatas[j].Phrase,
+                        pageSize.X * phraseDatas[j].TextPosition.X, pageSize.Y * phraseDatas[j].TextPosition.Y, 0);
+                }
+            }
+           
+            cb.EndText();
         }
         
         private static void AddSimpleText(string[] text, PdfWriter pdfWriter, ConfigLoader configLoader)

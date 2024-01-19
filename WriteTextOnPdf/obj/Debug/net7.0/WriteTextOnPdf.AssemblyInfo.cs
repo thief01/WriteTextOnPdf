@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("WriteTextOnPdf")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+929b23ade86025348a5f04ee6f9c25bc731fbf90")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
 [assembly: System.Reflection.AssemblyProductAttribute("WriteTextOnPdf")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WriteTextOnPdf")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
