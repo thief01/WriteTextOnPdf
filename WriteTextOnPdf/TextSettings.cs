@@ -39,6 +39,11 @@ public class TextSettings
         LoadSettings();
         CreateFont();
     }
+   
+    public Chunk GetChunk(string text)
+    {
+        return new Chunk(text, new Font(BaseFont, TextSize, Font.NORMAL, TextColor));
+    }
 
     private void LoadSettings()
     {
