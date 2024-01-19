@@ -21,19 +21,22 @@ public class PhraseData
     
     private string baseFontName;
     private string boldFontName;
+    private int lineId = 0;
     
     public PhraseData(string textName)
     {
+        lineId = 0;
         Phrase = new Phrase();
         TextName = textName;
         LoadSettings();
         CreateFonts();
+        // CreateOffsetPositionLine();
     }
 
-    public PhraseData(string textName, PhraseData phraseData)
+    public PhraseData(string textName, PhraseData phraseData, int lineId = 0)
     {
         Phrase = new Phrase();
-        TextName = textName;
+        
         TextPosition = phraseData.TextPosition;
         TextPivot = phraseData.TextPivot;
         TextColor = phraseData.TextColor;
@@ -44,6 +47,7 @@ public class PhraseData
         OnTop = phraseData.OnTop;
         baseFontName = phraseData.baseFontName;
         boldFontName = phraseData.boldFontName;
+        TextName = textName;
         LoadSettings();
         CreateFonts();
     }
@@ -59,6 +63,7 @@ public class PhraseData
     {
         var xmlDocument = ConfigLoader.XmlDocument;
         TextPosition = xmlDocument.ReadVector2(TextPosition, $"Config/{TextName}/TextPosition");
+        // TextPosition = xmlDocument.ReadVector2($"Config/{TextName}/TextPosition");
         TextPivot = xmlDocument.ReadVector2(TextPivot, $"Config/{TextName}/TextPivot");
         TextColor = xmlDocument.ReadBaseColor(TextColor, $"Config/{TextName}/TextColor");
         baseFontName = xmlDocument.ReadString(baseFontName, $"Config/{TextName}/NormalFont");
@@ -66,6 +71,11 @@ public class PhraseData
         TextSize = xmlDocument.ReadFloat(TextSize, $"Config/{TextName}/TextSize");
         OnTop = xmlDocument.ReadBool(OnTop, $"Config/{TextName}/OnTop");
         TextAlign = xmlDocument.ReadInt(TextAlign, $"Config/{TextName}/TextAlign");
+    }
+
+    private void CreateOffsetPositionLine()
+    {
+        TextPosition = new Vector2(TextPosition.X, TextPosition.Y + 15 * lineId);
     }
     
     private void CreateFonts()

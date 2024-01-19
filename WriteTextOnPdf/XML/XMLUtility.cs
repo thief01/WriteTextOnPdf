@@ -62,11 +62,28 @@ public static class XMLUtility
         XmlNodeList xmlNodeList = xmlReader.SelectNodes($"{node}");
         if (xmlNodeList == null || xmlNodeList.Count == 0)
         {
+            Console.WriteLine("Not found node: " + node + " with value: " + baseValue);
+            return baseValue;
+        }
+        
+        var x = Convert.ToSingle(xmlNodeList[0].SelectNodes("X")[0].InnerText.Replace(".", ","));
+        var y = Convert.ToSingle(xmlNodeList[0].SelectNodes("Y")[0].InnerText.Replace(".", ","));
+        baseValue = new Vector2(x, y);
+        Console.WriteLine($"Found node: {node} with value: {baseValue}");
+        return baseValue;
+    }
+
+    public static Vector2 ReadVector2(this XmlDocument xmlReader, string node)
+    {
+        var baseValue = new Vector2();
+        XmlNodeList xmlNodeList = xmlReader.SelectNodes($"{node}");
+        if (xmlNodeList == null || xmlNodeList.Count == 0)
+        {
             return baseValue;
         }
 
-        var x = Convert.ToSingle(xmlNodeList[0].SelectNodes("X")[0].InnerText);
-        var y = Convert.ToSingle(xmlNodeList[0].SelectNodes("Y")[0].InnerText);
+        var x = Convert.ToSingle(xmlNodeList[0].SelectNodes("X")[0].InnerText.Replace(".", ","));
+        var y = Convert.ToSingle(xmlNodeList[0].SelectNodes("Y")[0].InnerText.Replace(".", ","));
         baseValue = new Vector2(x, y);
         return baseValue;
     }
