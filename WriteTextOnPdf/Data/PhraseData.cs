@@ -1,4 +1,5 @@
 using System.Numerics;
+using System.Text.RegularExpressions;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using WriteTextOnPdf.XML;
@@ -52,11 +53,39 @@ public class PhraseData
         CreateFonts();
     }
 
-    public Chunk CreateChunk(string text)
+    public List<Chunk> CreateChunk(string text)
     {
-        var chunk =  new Chunk(text, new Font(NormalFont, TextSize, Font.NORMAL, TextColor));
-        Phrase.Add(chunk);
-        return chunk;
+        var splited = text.Split("<b>");
+        List<(bool, string)> texts = new List<(bool, string)>();
+
+        for (int i = 0; i < splited.Length; i++)
+        {
+            Console.WriteLine(splited[i]);
+            if (splited[i].Contains("</b>"))
+            {
+                var splited2 = splited[i].Split("</b>");
+                texts.Add(new ValueTuple<bool, string>(true, splited2[0]));
+                texts.Add(new ValueTuple<bool, string>(false, splited2[1]));
+            }
+            else
+            {
+                texts.Add(new ValueTuple<bool, string>(false, splited[i]));
+            }
+        }
+
+        if (texts.Count == 0)
+        {
+            texts.Add(new ValueTuple<bool, string>(false, text));
+        }
+
+        for (int i = 0; i < texts.Count; i++)
+        {
+            var chunk = new Chunk(texts[i].Item2, new Font(NormalFont, TextSize, texts[i].Item1 ? Font.BOLD : Font.NORMAL, TextColor));
+            Phrase.Add(chunk);
+        }
+        // var chunk =  new Chunk(text, new Font(NormalFont, TextSize, Font.NORMAL, TextColor));
+        // Phrase.Add(chunk);
+        return Phrase.Chunks.ToList();
     }
 
     public void LoadSettings()
