@@ -2,7 +2,7 @@ using System.Numerics;
 using System.Xml;
 using iTextSharp.text;
 
-namespace EasyAddTextToPdf.XML;
+namespace WriteTextOnPdf.XML;
 
 public static class XMLUtility
 {

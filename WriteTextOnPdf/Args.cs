@@ -1,4 +1,4 @@
-namespace EasyAddTextToPdf
+namespace WriteTextOnPdf
 {
     public class Args
     {

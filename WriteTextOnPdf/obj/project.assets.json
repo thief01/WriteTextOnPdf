@@ -22,53 +22,6 @@
         "runtime": {
           "lib/itextsharp.dll": {}
         }
-      },
-      "Microsoft.NET.ILLink.Analyzers/7.0.100-1.23211.1": {
-        "type": "package",
-        "build": {
-          "build/Microsoft.NET.ILLink.Analyzers.props": {}
-        }
-      },
-      "Microsoft.NET.ILLink.Tasks/7.0.100-1.23211.1": {
-        "type": "package",
-        "build": {
-          "build/Microsoft.NET.ILLink.Tasks.props": {}
-        }
-      }
-    },
-    "net7.0/win-x86": {
-      "BouncyCastle/1.8.9": {
-        "type": "package",
-        "compile": {
-          "lib/BouncyCastle.Crypto.dll": {}
-        },
-        "runtime": {
-          "lib/BouncyCastle.Crypto.dll": {}
-        }
-      },
-      "iTextSharp/5.5.13.3": {
-        "type": "package",
-        "dependencies": {
-          "BouncyCastle": "1.8.9"
-        },
-        "compile": {
-          "lib/itextsharp.dll": {}
-        },
-        "runtime": {
-          "lib/itextsharp.dll": {}
-        }
-      },
-      "Microsoft.NET.ILLink.Analyzers/7.0.100-1.23211.1": {
-        "type": "package",
-        "build": {
-          "build/Microsoft.NET.ILLink.Analyzers.props": {}
-        }
-      },
-      "Microsoft.NET.ILLink.Tasks/7.0.100-1.23211.1": {
-        "type": "package",
-        "build": {
-          "build/Microsoft.NET.ILLink.Tasks.props": {}
-        }
       }
     }
   },
@@ -101,59 +54,10 @@
         "lib/itextsharp.dll",
         "notice.txt"
       ]
-    },
-    "Microsoft.NET.ILLink.Analyzers/7.0.100-1.23211.1": {
-      "sha512": "0GvbEgDGcUQA9KuWcQU1WwYHXt1tBzNr1Nls/M57rM7NA/AndFwCaCEoJpJkmxRY7xLlPDBnmGp8h5+FNqUngg==",
-      "type": "package",
-      "path": "microsoft.net.illink.analyzers/7.0.100-1.23211.1",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "Icon.png",
-        "analyzers/dotnet/cs/ILLink.CodeFixProvider.dll",
-        "analyzers/dotnet/cs/ILLink.RoslynAnalyzer.dll",
-        "build/Microsoft.NET.ILLink.Analyzers.props",
-        "microsoft.net.illink.analyzers.7.0.100-1.23211.1.nupkg.sha512",
-        "microsoft.net.illink.analyzers.nuspec"
-      ]
-    },
-    "Microsoft.NET.ILLink.Tasks/7.0.100-1.23211.1": {
-      "sha512": "tvG8XZYLjT0o3WicCyKBZysVWo1jC9HdCFmNRmddx3WbAz0UCsd0qKZqpiEo99VLA8Re+FzWK51OcRldQPbt2Q==",
-      "type": "package",
-      "path": "microsoft.net.illink.tasks/7.0.100-1.23211.1",
-      "hasTools": true,
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "Icon.png",
-        "Sdk/Sdk.props",
-        "build/6.0_suppressions.xml",
-        "build/Microsoft.NET.ILLink.Tasks.props",
-        "build/Microsoft.NET.ILLink.targets",
-        "microsoft.net.illink.tasks.7.0.100-1.23211.1.nupkg.sha512",
-        "microsoft.net.illink.tasks.nuspec",
-        "tools/net472/ILLink.Tasks.dll",
-        "tools/net472/Mono.Cecil.dll",
-        "tools/net472/System.Buffers.dll",
-        "tools/net472/System.Collections.Immutable.dll",
-        "tools/net472/System.Memory.dll",
-        "tools/net472/System.Numerics.Vectors.dll",
-        "tools/net472/System.Reflection.Metadata.dll",
-        "tools/net472/System.Runtime.CompilerServices.Unsafe.dll",
-        "tools/net7.0/ILLink.Tasks.deps.json",
-        "tools/net7.0/ILLink.Tasks.dll",
-        "tools/net7.0/Mono.Cecil.Pdb.dll",
-        "tools/net7.0/Mono.Cecil.dll",
-        "tools/net7.0/illink.deps.json",
-        "tools/net7.0/illink.dll",
-        "tools/net7.0/illink.runtimeconfig.json"
-      ]
     }
   },
   "projectFileDependencyGroups": {
     "net7.0": [
-      "Microsoft.NET.ILLink.Analyzers >= 7.0.100-1.23211.1",
-      "Microsoft.NET.ILLink.Tasks >= 7.0.100-1.23211.1",
       "iTextSharp >= 5.5.13.3"
     ]
   },
@@ -202,18 +106,6 @@
       "net7.0": {
         "targetAlias": "net7.0",
         "dependencies": {
-          "Microsoft.NET.ILLink.Analyzers": {
-            "suppressParent": "All",
-            "target": "Package",
-            "version": "[7.0.100-1.23211.1, )",
-            "autoReferenced": true
-          },
-          "Microsoft.NET.ILLink.Tasks": {
-            "suppressParent": "All",
-            "target": "Package",
-            "version": "[7.0.100-1.23211.1, )",
-            "autoReferenced": true
-          },
           "iTextSharp": {
             "target": "Package",
             "version": "[5.5.13.3, )"
@@ -236,11 +128,7 @@
             "version": "[7.0.14, 7.0.14]"
           },
           {
-            "name": "Microsoft.AspNetCore.App.Runtime.win-x86",
-            "version": "[7.0.14, 7.0.14]"
-          },
-          {
-            "name": "Microsoft.NETCore.App.Host.win-x86",
+            "name": "Microsoft.NETCore.App.Host.win-x64",
             "version": "[7.0.14, 7.0.14]"
           },
           {
@@ -248,15 +136,7 @@
             "version": "[7.0.14, 7.0.14]"
           },
           {
-            "name": "Microsoft.NETCore.App.Runtime.win-x86",
-            "version": "[7.0.14, 7.0.14]"
-          },
-          {
             "name": "Microsoft.WindowsDesktop.App.Ref",
-            "version": "[7.0.14, 7.0.14]"
-          },
-          {
-            "name": "Microsoft.WindowsDesktop.App.Runtime.win-x86",
             "version": "[7.0.14, 7.0.14]"
           }
         ],
@@ -267,11 +147,6 @@
         },
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
       }
-    },
-    "runtimes": {
-      "win-x86": {
-        "#import": []
-      }
     }
   },
   "logs": [
@@ -279,7 +154,7 @@
       "code": "NU1701",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "Pakiet „BouncyCastle 1.8.9” został przywrócony przy użyciu elementu „.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1” zamiast platformy docelowej projektu „net7.0”. Ten pakiet może nie być w pełni kompatybilny z Twoim projektem.",
+      "message": "Package 'BouncyCastle 1.8.9' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0'. This package may not be fully compatible with your project.",
       "libraryId": "BouncyCastle",
       "targetGraphs": [
         "net7.0"
@@ -289,7 +164,7 @@
       "code": "NU1701",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "Pakiet „iTextSharp 5.5.13.3” został przywrócony przy użyciu elementu „.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1” zamiast platformy docelowej projektu „net7.0”. Ten pakiet może nie być w pełni kompatybilny z Twoim projektem.",
+      "message": "Package 'iTextSharp 5.5.13.3' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0'. This package may not be fully compatible with your project.",
       "libraryId": "iTextSharp",
       "targetGraphs": [
         "net7.0"

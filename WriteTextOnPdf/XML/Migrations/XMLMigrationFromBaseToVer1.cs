@@ -1,13 +1,24 @@
 using System.Numerics;
 using System.Xml;
 
-namespace EasyAddTextToPdf.XMLMigrations;
+namespace WriteTextOnPdf.XML.Migrations;
 
 public class XMLMigrationFromBaseToVer1 : XMLMigrationBase
 {
-    public override int FromVersion => 0;
-    public override int ToVersion => 1;
+    public override string FromVersion => "base";
+    public override string ToVersion => "1.0";
     
+    public override void MigrateSettings()
+    {
+        Console.WriteLine("You have OLD XMLversion but migration system not added yet.");
+        Console.ReadKey();
+        Console.ReadKey();
+        throw new NotImplementedException();
+    }
+    
+    /// <summary>
+    /// Todo: migration logic
+    /// </summary>
     public override void LoadSettings()
     {
         XmlDocument xmlReader = new XmlDocument();
@@ -36,12 +47,7 @@ public class XMLMigrationFromBaseToVer1 : XMLMigrationBase
             $" \nWrite text on top: {OnTop.ToString()}" +
             $" \nText color: {TextColor.ToString()}\n\n");
     }
-
-    public override void MigrateSettings()
-    {
-        throw new NotImplementedException();
-    }
-
+    
     public override void SaveSettings()
     {
         throw new NotImplementedException();

@@ -1,9 +1,9 @@
-namespace EasyAddTextToPdf.XMLMigrations;
+namespace WriteTextOnPdf.XML.Migrations;
 
 public abstract class XMLMigrationBase
 {
-    public abstract int FromVersion { get; }
-    public abstract int ToVersion { get; }
+    public abstract string FromVersion { get; }
+    public abstract string ToVersion { get; }
     
     public void Migrate()
     {

@@ -1,15 +1,17 @@
-﻿using System;
-using System.IO;
-using System.Text;
+﻿using System.Text;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
+using WriteTextOnPdf.UnitTests;
 
-namespace EasyAddTextToPdf
+namespace WriteTextOnPdf
 {
     class Program
     {
         static void Main(string[] args)
         {
+            ConfigLoader configLoader = new ConfigLoader();
+            UnitTestManager unitTestManager = new UnitTestManager();
+            return;
             EncodingProvider ppp = CodePagesEncodingProvider.Instance;
             Encoding.RegisterProvider(ppp);
 

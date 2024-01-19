@@ -1,15 +1,18 @@
-using System.Drawing;
 using System.Numerics;
 using System.Xml;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
+using WriteTextOnPdf.XML;
+using WriteTextOnPdf.XML.Migrations;
 using Rectangle = iTextSharp.text.Rectangle;
 
-namespace EasyAddTextToPdf
+namespace WriteTextOnPdf
 {
     public class ConfigLoader
     {
         public const string SETTINGS_FILE_NAME = "config.xml";
+        
+        public static XmlDocument XmlDocument { get; private set; }
 
         public enum TextAlignEnum
         {
@@ -32,11 +35,9 @@ namespace EasyAddTextToPdf
         public BaseColor TextColorScaled => new(TextColor.X / 255f, TextColor.Y / 255f, TextColor.Z / 255f);
         private Vector3 TextColor { get; set; } = new Vector3(0, 0, 0);
         
-        private XmlDocument xmlReader = new XmlDocument();
-        
         public ConfigLoader()
         {
-            BaseFont = BaseFont.CreateFont("FONT.TTF", BaseFont.IDENTITY_H, true);
+            // BaseFont = BaseFont.CreateFont("FONT.TTF", BaseFont.IDENTITY_H, true);
             if (File.Exists(SETTINGS_FILE_NAME))
                 LoadSettings();
             else
@@ -61,32 +62,40 @@ namespace EasyAddTextToPdf
 
         private void LoadSettings()
         {
-            xmlReader = new XmlDocument();
-            xmlReader.Load(SETTINGS_FILE_NAME);
+            XmlDocument = new XmlDocument();
+            XmlDocument.Load(SETTINGS_FILE_NAME);
+            var ver =XmlDocument.ReadString("base", "Config/XMLVersion");
+            if (ver == "base")
+            {
+                XMLMigrationFromBaseToVer1 migration = new XMLMigrationFromBaseToVer1();
+                migration.Migrate();
+            }
+            
+            return;
 
-            XmlNodeList xmlNodeList = xmlReader.SelectNodes("Config/TextAlign");
-            xmlNodeList = xmlReader.SelectNodes("Config/TextAlign");
-            TextAlign = (TextAlignEnum)Convert.ToInt32(xmlNodeList[0].InnerText);
-            xmlNodeList = xmlReader.SelectNodes("Config/TextSize");
-            TextSize = Convert.ToInt32(xmlNodeList[0].InnerText);
-            xmlNodeList = xmlReader.SelectNodes("Config/MarginSize");
-            TextMargin = Convert.ToInt32(xmlNodeList[0].InnerText);
-            xmlNodeList = xmlReader.SelectNodes("Config/TextOffsetHorizontalFromCenter");
-            TextOffsetHorizontal = Convert.ToInt32(xmlNodeList[0].InnerText);
-            xmlNodeList = xmlReader.SelectNodes("Config/OnTop");
-            OnTop = Convert.ToBoolean(xmlNodeList[0].InnerText);
-            TextColor = new Vector3(Convert.ToInt32(xmlReader.SelectNodes("Config/TextColor/R")[0].InnerText),
-                Convert.ToInt32(xmlReader.SelectNodes("Config/TextColor/G")[0].InnerText),
-                Convert.ToInt32(xmlReader.SelectNodes("Config/TextColor/B")[0].InnerText));
-
-            Console.WriteLine(
-                $"### Loaded config with following settings ###" + 
-                $"\nText align: {TextAlign.ToString()}" + 
-                $"\nText size: {TextSize}" +
-                $"\nText margin: {TextMargin}" + 
-                $"\nText offset from center(horizontal): {TextOffsetHorizontal}" + 
-                $" \nWrite text on top: {OnTop.ToString()}" +
-                $" \nText color: {TextColor.ToString()}\n\n");
+            // XmlNodeList xmlNodeList = xmlReader.SelectNodes("Config/TextAlign");
+            // xmlNodeList = xmlReader.SelectNodes("Config/TextAlign");
+            // TextAlign = (TextAlignEnum)Convert.ToInt32(xmlNodeList[0].InnerText);
+            // xmlNodeList = xmlReader.SelectNodes("Config/TextSize");
+            // TextSize = Convert.ToInt32(xmlNodeList[0].InnerText);
+            // xmlNodeList = xmlReader.SelectNodes("Config/MarginSize");
+            // TextMargin = Convert.ToInt32(xmlNodeList[0].InnerText);
+            // xmlNodeList = xmlReader.SelectNodes("Config/TextOffsetHorizontalFromCenter");
+            // TextOffsetHorizontal = Convert.ToInt32(xmlNodeList[0].InnerText);
+            // xmlNodeList = xmlReader.SelectNodes("Config/OnTop");
+            // OnTop = Convert.ToBoolean(xmlNodeList[0].InnerText);
+            // TextColor = new Vector3(Convert.ToInt32(xmlReader.SelectNodes("Config/TextColor/R")[0].InnerText),
+            //     Convert.ToInt32(xmlReader.SelectNodes("Config/TextColor/G")[0].InnerText),
+            //     Convert.ToInt32(xmlReader.SelectNodes("Config/TextColor/B")[0].InnerText));
+            //
+            // Console.WriteLine(
+            //     $"### Loaded config with following settings ###" + 
+            //     $"\nText align: {TextAlign.ToString()}" + 
+            //     $"\nText size: {TextSize}" +
+            //     $"\nText margin: {TextMargin}" + 
+            //     $"\nText offset from center(horizontal): {TextOffsetHorizontal}" + 
+            //     $" \nWrite text on top: {OnTop.ToString()}" +
+            //     $" \nText color: {TextColor.ToString()}\n\n");
         }
     }
 }
