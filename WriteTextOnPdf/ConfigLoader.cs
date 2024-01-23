@@ -10,6 +10,7 @@ namespace WriteTextOnPdf
 {
     public class ConfigLoader
     {
+        public const string CORE_SETTINGS_FILE_NAME = "core-config.xml";
         public const string SETTINGS_FILE_NAME = "config.xml";
         
         public static XmlDocument XmlDocument { get; private set; }
@@ -34,16 +35,23 @@ namespace WriteTextOnPdf
 
         public BaseColor TextColorScaled => new(TextColor.X / 255f, TextColor.Y / 255f, TextColor.Z / 255f);
         private Vector3 TextColor { get; set; } = new Vector3(0, 0, 0);
-        
+
         public ConfigLoader()
         {
             // BaseFont = BaseFont.CreateFont("FONT.TTF", BaseFont.IDENTITY_H, true);
             if (File.Exists(SETTINGS_FILE_NAME))
-                LoadSettings();
-            else
             {
-                Console.Write("Config doesn't exist.");
+                LoadSettings(SETTINGS_FILE_NAME);
+                return;
             }
+
+            if (File.Exists(CORE_SETTINGS_FILE_NAME))
+            {
+                LoadSettings(CORE_SETTINGS_FILE_NAME);
+                return;
+            }
+
+            Console.Write("Config doesn't exist.");
         }
 
         public void CalculatePositions(Rectangle size, int textLines = 1)
@@ -60,10 +68,10 @@ namespace WriteTextOnPdf
             TextPosition = new Vector2(size.Width / 2, textY);
         }
 
-        private void LoadSettings()
+        private void LoadSettings(string config)
         {
             XmlDocument = new XmlDocument();
-            XmlDocument.Load(SETTINGS_FILE_NAME);
+            XmlDocument.Load(config);
             var ver =XmlDocument.ReadString("base", "Config/XMLVersion");
             if (ver == "base")
             {
