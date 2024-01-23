@@ -1,0 +1,59 @@
+<Config>
+	<XMLVersion>1</XMLVersion>
+	
+<!--&lt;!&ndash;	OLD&ndash;&gt;-->
+<!--	<TextAlign>1</TextAlign>-->
+<!--	<TextSize>18</TextSize>-->
+<!--	<MarginSize>0</MarginSize>-->
+<!--	&lt;!&ndash; For now it is doing nothing. &ndash;&gt;-->
+<!--	<TextOffsetHorizontalFromCenter>0</TextOffsetHorizontalFromCenter>-->
+<!--	<OnTop>true</OnTop>-->
+<!--	<TextColor>-->
+<!--		<R>120</R>-->
+<!--		<G>120</G>-->
+<!--		<B>120</B>-->
+<!--	</TextColor>-->
+<!--&lt;!&ndash;	OLD&ndash;&gt;-->
+	
+	<PdfSettings>
+		<AutoDetecSpace>true</AutoDetecSpace>
+		<TopSpace>0</TopSpace>
+		<BottomSpace>0</BottomSpace>
+		<PDFScale>
+			<X>0.9</X>
+			<Y>0.9</Y>
+		</PDFScale>
+	</PdfSettings>
+	
+	<GlobalTextPhase>
+<!--		NOT IMPLEMENTED YET-->
+		<TextPivot>
+			<X>0.5</X>
+			<Y>0.5</Y>
+		</TextPivot>
+<!--		TEXT ALIGN FOR NOW-->
+		<TextAlign>1</TextAlign>
+		
+		<TextPosition>
+			<X>0.5</X>
+			<Y>0.5</Y>
+		</TextPosition>
+		
+		<OnTop>false</OnTop>
+		
+		<TextColor>
+			<R>120</R>
+			<G>120</G>
+			<B>120</B>
+		</TextColor>
+		<TextSize>18</TextSize>
+		<NormalFont>font.ttf</NormalFont>
+		<BoldFont>font_B.ttf</BoldFont>
+		
+	</GlobalTextPhase>
+	
+	<Text1>
+		<OnTop>false</OnTop>
+		<TextSize>18</TextSize>
+	</Text1>
+</Config>
