@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "F:\\_P\\thief01\\RiderProjects\\WriteTextOnPdf\\WriteTextOnPdf\\WriteTextOnPdf.csproj": {}
+    "F:\\_P\\OTHER\\WriteTextOnPdf\\WriteTextOnPdf\\WriteTextOnPdf.csproj": {}
   },
   "projects": {
-    "F:\\_P\\thief01\\RiderProjects\\WriteTextOnPdf\\WriteTextOnPdf\\WriteTextOnPdf.csproj": {
+    "F:\\_P\\OTHER\\WriteTextOnPdf\\WriteTextOnPdf\\WriteTextOnPdf.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\_P\\thief01\\RiderProjects\\WriteTextOnPdf\\WriteTextOnPdf\\WriteTextOnPdf.csproj",
+        "projectUniqueName": "F:\\_P\\OTHER\\WriteTextOnPdf\\WriteTextOnPdf\\WriteTextOnPdf.csproj",
         "projectName": "WriteTextOnPdf",
-        "projectPath": "F:\\_P\\thief01\\RiderProjects\\WriteTextOnPdf\\WriteTextOnPdf\\WriteTextOnPdf.csproj",
+        "projectPath": "F:\\_P\\OTHER\\WriteTextOnPdf\\WriteTextOnPdf\\WriteTextOnPdf.csproj",
         "packagesPath": "C:\\Users\\thief01\\.nuget\\packages\\",
-        "outputPath": "F:\\_P\\thief01\\RiderProjects\\WriteTextOnPdf\\WriteTextOnPdf\\obj\\",
+        "outputPath": "F:\\_P\\OTHER\\WriteTextOnPdf\\WriteTextOnPdf\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -45,18 +45,6 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "dependencies": {
-            "Microsoft.NET.ILLink.Analyzers": {
-              "suppressParent": "All",
-              "target": "Package",
-              "version": "[7.0.100-1.23211.1, )",
-              "autoReferenced": true
-            },
-            "Microsoft.NET.ILLink.Tasks": {
-              "suppressParent": "All",
-              "target": "Package",
-              "version": "[7.0.100-1.23211.1, )",
-              "autoReferenced": true
-            },
             "iTextSharp": {
               "target": "Package",
               "version": "[5.5.13.3, )"
@@ -79,11 +67,7 @@
               "version": "[7.0.14, 7.0.14]"
             },
             {
-              "name": "Microsoft.AspNetCore.App.Runtime.win-x86",
-              "version": "[7.0.14, 7.0.14]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Host.win-x86",
+              "name": "Microsoft.NETCore.App.Host.win-x64",
               "version": "[7.0.14, 7.0.14]"
             },
             {
@@ -91,15 +75,7 @@
               "version": "[7.0.14, 7.0.14]"
             },
             {
-              "name": "Microsoft.NETCore.App.Runtime.win-x86",
-              "version": "[7.0.14, 7.0.14]"
-            },
-            {
               "name": "Microsoft.WindowsDesktop.App.Ref",
-              "version": "[7.0.14, 7.0.14]"
-            },
-            {
-              "name": "Microsoft.WindowsDesktop.App.Runtime.win-x86",
               "version": "[7.0.14, 7.0.14]"
             }
           ],
@@ -109,11 +85,6 @@
             }
           },
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
-        }
-      },
-      "runtimes": {
-        "win-x86": {
-          "#import": []
         }
       }
     }

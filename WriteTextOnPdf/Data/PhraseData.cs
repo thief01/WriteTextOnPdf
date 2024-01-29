@@ -83,8 +83,6 @@ public class PhraseData
             var chunk = new Chunk(texts[i].Item2, new Font(NormalFont, TextSize, texts[i].Item1 ? Font.BOLD : Font.NORMAL, TextColor));
             Phrase.Add(chunk);
         }
-        // var chunk =  new Chunk(text, new Font(NormalFont, TextSize, Font.NORMAL, TextColor));
-        // Phrase.Add(chunk);
         return Phrase.Chunks.ToList();
     }
 
