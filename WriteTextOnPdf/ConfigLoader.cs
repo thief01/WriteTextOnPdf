@@ -14,31 +14,26 @@ namespace WriteTextOnPdf
         public const string SETTINGS_FILE_NAME = "config.xml";
         
         public static XmlDocument XmlDocument { get; private set; }
-
-        public enum TextAlignEnum
-        {
-            left,
-            center,
-            right
-        }
-
-        public TextAlignEnum TextAlign { get; private set; } = TextAlignEnum.center;
-        public int TextSize { get; private set; } = 18;
-        public int TextMargin { get; private set; } = 20;
-        public int TextOffsetHorizontal { get; private set; } = 0;
-        public bool OnTop { get; private set; } = true;
-        public Vector2 PdfScale { get; private set; } = new Vector2(0.9f, 0.9f);
-        public Vector2 PdfOffset { get; private set; } = new Vector2(0, 0);
-        public Vector2 TextPosition { get; private set; } = new Vector2(0, 0);
-        public BaseFont BaseFont { get; private set; }
-        public float LineOffset { get; private set; }
-
-        public BaseColor TextColorScaled => new(TextColor.X / 255f, TextColor.Y / 255f, TextColor.Z / 255f);
-        private Vector3 TextColor { get; set; } = new Vector3(0, 0, 0);
-
+        public static ConfigLoader Instance => instance;
+        private static ConfigLoader instance;
+        
+        public string LoadedConfig { get; private set; }
+        
         public ConfigLoader()
         {
-            // BaseFont = BaseFont.CreateFont("FONT.TTF", BaseFont.IDENTITY_H, true);
+            if(instance != null)
+                return;
+            instance = this;
+            LoadSettings();
+        }
+        
+        public void ReloadSettings()
+        {
+            LoadSettings();
+        }
+        
+        private void LoadSettings()
+        {
             if (File.Exists(SETTINGS_FILE_NAME))
             {
                 LoadSettings(SETTINGS_FILE_NAME);
@@ -53,57 +48,21 @@ namespace WriteTextOnPdf
 
             Console.Write("Config doesn't exist.");
         }
-
-        public void CalculatePositions(Rectangle size, int textLines = 1)
-        {
-            float neededSizeForLine = (TextSize + TextMargin);
-            float neededSize = neededSizeForLine * textLines;
-            float calculatedScale = (size.Height - neededSize ) / size.Height;
-            float invertedScale = 1 - calculatedScale;
-            float textY = OnTop ? size.Height - TextSize - TextMargin / 2 : neededSize - TextMargin / 2 - 10;
-            
-            PdfScale = new Vector2(calculatedScale, calculatedScale);
-            PdfOffset = new Vector2(size.Width * invertedScale / 2, OnTop ? 0 : size.Height * invertedScale);
-            LineOffset = -neededSizeForLine;
-            TextPosition = new Vector2(size.Width / 2, textY);
-        }
-
+        
         private void LoadSettings(string config)
         {
             XmlDocument = new XmlDocument();
             XmlDocument.Load(config);
+            LoadedConfig = config;
             var ver =XmlDocument.ReadString("base", "Config/XMLVersion");
+            Console.WriteLine("Migrating XML");
             if (ver == "base")
             {
                 XMLMigrationFromBaseToVer1 migration = new XMLMigrationFromBaseToVer1();
                 migration.Migrate();
             }
+            Console.WriteLine("Migration done");
             
-            return;
-
-            // XmlNodeList xmlNodeList = xmlReader.SelectNodes("Config/TextAlign");
-            // xmlNodeList = xmlReader.SelectNodes("Config/TextAlign");
-            // TextAlign = (TextAlignEnum)Convert.ToInt32(xmlNodeList[0].InnerText);
-            // xmlNodeList = xmlReader.SelectNodes("Config/TextSize");
-            // TextSize = Convert.ToInt32(xmlNodeList[0].InnerText);
-            // xmlNodeList = xmlReader.SelectNodes("Config/MarginSize");
-            // TextMargin = Convert.ToInt32(xmlNodeList[0].InnerText);
-            // xmlNodeList = xmlReader.SelectNodes("Config/TextOffsetHorizontalFromCenter");
-            // TextOffsetHorizontal = Convert.ToInt32(xmlNodeList[0].InnerText);
-            // xmlNodeList = xmlReader.SelectNodes("Config/OnTop");
-            // OnTop = Convert.ToBoolean(xmlNodeList[0].InnerText);
-            // TextColor = new Vector3(Convert.ToInt32(xmlReader.SelectNodes("Config/TextColor/R")[0].InnerText),
-            //     Convert.ToInt32(xmlReader.SelectNodes("Config/TextColor/G")[0].InnerText),
-            //     Convert.ToInt32(xmlReader.SelectNodes("Config/TextColor/B")[0].InnerText));
-            //
-            // Console.WriteLine(
-            //     $"### Loaded config with following settings ###" + 
-            //     $"\nText align: {TextAlign.ToString()}" + 
-            //     $"\nText size: {TextSize}" +
-            //     $"\nText margin: {TextMargin}" + 
-            //     $"\nText offset from center(horizontal): {TextOffsetHorizontal}" + 
-            //     $" \nWrite text on top: {OnTop.ToString()}" +
-            //     $" \nText color: {TextColor.ToString()}\n\n");
         }
     }
 }
