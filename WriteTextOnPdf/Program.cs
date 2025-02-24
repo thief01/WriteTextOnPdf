@@ -35,10 +35,31 @@ namespace WriteTextOnPdf
             var pdfSettings = PdfSettings.Instance;
             pageSize = new Vector2(pdfReader.GetPageSizeWithRotation(1).Width, pdfReader.GetPageSizeWithRotation(1).Height);
             var pageOffset = pdfSettings.GetOffsetFromPageSize(pageSize);
+            var rotation = pdfReader.GetPageRotation(1) + 180;
+            Console.WriteLine(rotation);
+            
+            
 
             PdfImportedPage page = pdfWriter.GetImportedPage(pdfReader, 1);
-            pdfWriter.DirectContent.AddTemplate(page, pdfSettings.PdfScale.X, 0, 0, pdfSettings.PdfScale.Y,
-                pageOffset.X, pageOffset.Y);
+            if (rotation == 90 || rotation == 270)
+            {
+                var radians = rotation * Math.PI / 180;
+                var cos = Math.Cos(radians);
+                var sin = Math.Sin(radians);
+                var scale = pdfSettings.PdfScale;
+                pdfWriter.DirectContent.AddTemplate(page, scale.X * cos, scale.X*sin, -scale.Y*sin, scale.Y*cos,  pageOffset.X, pdfReader.GetPageSizeWithRotation(1).Height - pageOffset.Y);
+            }
+            else
+            {
+                pdfWriter.DirectContent.AddTemplate(page, pdfSettings.PdfScale.X, 0, 0, pdfSettings.PdfScale.Y, pageOffset.X, pageOffset.Y);
+            }
+                
+            
+                
+            //pdfWriter.DirectContent.AddTemplate(page, scale.X * cos, scale.X*sin, -scale.Y*sin, scale.Y*cos,  pageOffset.X, pdfReader.GetPageSizeWithRotation(1).Height - pageOffset.Y);
+            
+            // pdfWriter.DirectContent.AddTemplate(page, pdfSettings.PdfScale.X, 0, 0, pdfSettings.PdfScale.Y,
+                // pageOffset.X, pageOffset.Y);
 
             AddTexts(pdfWriter, parsedArgs);
 
