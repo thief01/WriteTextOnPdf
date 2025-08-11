@@ -36,12 +36,23 @@ namespace WriteTextOnPdf
             pageSize = new Vector2(pdfReader.GetPageSizeWithRotation(1).Width, pdfReader.GetPageSizeWithRotation(1).Height);
             var pageOffset = pdfSettings.GetOffsetFromPageSize(pageSize);
             var rotation = pdfReader.GetPageRotation(1) + 180;
-            Console.WriteLine(rotation);
-            
-            
-
+            Console.WriteLine("PDF Rotation: " + rotation);
             PdfImportedPage page = pdfWriter.GetImportedPage(pdfReader, 1);
-            if (rotation == 90 || rotation == 270)
+            if (rotation > 360)
+            {
+                rotation *= -1;
+                rotation %= 360;
+            }
+            if(rotation == -90 || rotation == -270)
+            {
+                rotation *= -1;
+                var radians = rotation * Math.PI / 180;
+                var cos = Math.Cos(radians);
+                var sin = Math.Sin(radians);
+                var scale = pdfSettings.PdfScale;
+                pdfWriter.DirectContent.AddTemplate(page, scale.X * cos, scale.X*sin, -scale.Y*sin, scale.Y*cos, pdfReader.GetPageSizeWithRotation(1).Width - pageOffset.X, pageOffset.Y);
+            }
+            else if (rotation == 90 || rotation == 270)
             {
                 var radians = rotation * Math.PI / 180;
                 var cos = Math.Cos(radians);
